@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { logIn } from 'redux/auth/operations';
+import { register } from 'redux/auth/operations';
 import { selectAuth } from 'redux/auth/selector';
-import css from './Login.module.css';
+import css from './RegisterForm.module.css';
 
-const LoginForm = () => {
+const RegisterForm = () => {
+  const navigate = useNavigate();
+  const isAuth = useSelector(selectAuth);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectAuth);
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate('/contacts');
-    }
-  }, [isAuth, navigate]);
 
   const handleChange = e => {
     const { name, value } = e.target;
     switch (name) {
+      case 'name':
+        setName(value);
+        break;
       case 'email':
         setEmail(value);
         break;
@@ -34,20 +32,43 @@ const LoginForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(logIn({ email, password }));
-    setEmail('');
-    setPassword('');
+    try {
+      if (password.length <= 7) {
+        alert('Password should be minimum 7 characters');
+        setPassword('');
+        return;
+      }
+      dispatch(register({ name, email, password }));
+      setName('');
+      setEmail('');
+      setPassword('');
+      if (isAuth) {
+        navigate('/contacts');
+      }
+    } catch (error) {
+      alert('Registration error!');
+      console.log(error.message);
+    }
   };
-
   return (
     <div>
       <form onSubmit={handleSubmit} className={css.form}>
         <input
           className={css.input}
+          id="name"
+          name="name"
+          type="text"
+          autoComplete="name"
+          required
+          value={name}
+          onChange={handleChange}
+          placeholder="enter your name"
+        />
+        <input
+          className={css.input}
           id="email"
           name="email"
           type="email"
-          autoComplete="email"
           required
           value={email}
           onChange={handleChange}
@@ -58,13 +79,11 @@ const LoginForm = () => {
           id="password"
           name="password"
           type="password"
-          autoComplete="current-password"
           required
           value={password}
           onChange={handleChange}
           placeholder="enter your password"
         />
-
         <button className={css.btn} type="submit">
           Submit
         </button>
@@ -73,4 +92,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
