@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/operations';
-import { selectAuth } from 'redux/auth/selector';
 import css from './RegisterForm.module.css';
 
 const RegisterForm = () => {
-  const navigate = useNavigate();
-  const isAuth = useSelector(selectAuth);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,9 +38,6 @@ const RegisterForm = () => {
       setName('');
       setEmail('');
       setPassword('');
-      if (isAuth) {
-        navigate('/contacts');
-      }
     } catch (error) {
       alert('Registration error!');
       console.log(error.message);

@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/operations';
-import { selectAuth } from 'redux/auth/selector';
 import css from './Login.module.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectAuth);
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate('/contacts');
-    }
-  }, [isAuth, navigate]);
 
   const handleChange = e => {
     const { name, value } = e.target;
