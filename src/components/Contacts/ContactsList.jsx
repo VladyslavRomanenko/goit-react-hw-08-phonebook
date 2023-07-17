@@ -16,7 +16,6 @@ const ContactsList = () => {
   const isAuth = useSelector(selectAuth);
   useEffect(() => {
     if (isAuth) {
-      console.log(1);
       dispatch(fetchContactsThunk());
     }
   }, [dispatch, isAuth]);
