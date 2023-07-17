@@ -6,12 +6,9 @@ import { selectAuth } from 'redux/auth/selector';
 export const fetchContactsThunk = createAsyncThunk(
   'contacts/fetchAllContacts',
   async (_, thunk_Api) => {
-    const isAuth = useSelector(selectAuth);
     try {
-      // if (isAuth) {
       const { data } = await instance.get('/contacts');
       return data;
-      // }
     } catch (error) {
       return thunk_Api.rejectWithValue(error.message);
     }
