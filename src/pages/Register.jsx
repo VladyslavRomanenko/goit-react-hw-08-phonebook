@@ -71,7 +71,6 @@ const Register = () => {
             id="email"
             name="email"
             type="email"
-            // autoComplete="email"
             required
             value={email}
             onChange={handleChange}
@@ -84,7 +83,6 @@ const Register = () => {
             id="password"
             name="password"
             type="password"
-            // autoComplete="new-password"
             required
             value={password}
             onChange={handleChange}

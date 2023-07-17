@@ -23,7 +23,7 @@ export const register = createAsyncThunk(
       token.set(data.token);
       return data;
     } catch (error) {
-      alert('Account already exists');
+      alert('Error');
       return rejectWithValue(error.message);
     }
   }
