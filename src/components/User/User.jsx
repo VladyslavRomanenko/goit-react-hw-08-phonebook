@@ -13,7 +13,7 @@ const User = () => {
   const user = useSelector(selectUser);
   return (
     <div className={css.userMenu}>
-      <p className={css.text}>Welcome {user?.email}</p>
+      <p className={css.text}>Welcome {user?.name}!</p>
       <button className={css.btn} onClick={handleLogout} type="button">
         Logout
       </button>
