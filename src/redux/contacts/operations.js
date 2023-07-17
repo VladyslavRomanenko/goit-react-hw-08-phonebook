@@ -1,13 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { privateApi } from 'redux/auth/api';
+import { useSelector } from 'react-redux';
+import { instance } from 'redux/auth/api';
+import { selectAuth } from 'redux/auth/selector';
 
 export const fetchContactsThunk = createAsyncThunk(
   'contacts/fetchAllContacts',
   async (_, thunk_Api) => {
+    const isAuth = useSelector(selectAuth);
     try {
-      console.log(2);
-      const { data } = await privateApi.get('/contacts');
+      // if (isAuth) {
+      const { data } = await instance.get('/contacts');
       return data;
+      // }
     } catch (error) {
       return thunk_Api.rejectWithValue(error.message);
     }
@@ -18,7 +22,7 @@ export const addContactThunk = createAsyncThunk(
   'contacts/addContact',
   async (contact, thunk_Api) => {
     try {
-      const { data } = await privateApi.post('/contacts', contact);
+      const { data } = await instance.post('/contacts', contact);
       return data;
     } catch (error) {
       return thunk_Api.rejectWithValue(error.message);
@@ -29,7 +33,7 @@ export const deleteContactThunk = createAsyncThunk(
   'contacts/deleteContact',
   async (id, thunk_Api) => {
     try {
-      const { data } = await privateApi.delete(`/contacts/${id}`);
+      const { data } = await instance.delete(`/contacts/${id}`);
       return data;
     } catch (error) {
       return thunk_Api.rejectWithValue(error.message);

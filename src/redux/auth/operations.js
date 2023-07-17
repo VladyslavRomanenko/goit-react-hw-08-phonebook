@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { privateApi, token } from './api';
+import { instance, token } from './api';
 
 export const logIn = createAsyncThunk(
   'auth/login',
   async (body, { rejectWithValue }) => {
     try {
-      const { data } = await privateApi.post('/users/login', body);
+      const { data } = await instance.post('/users/login', body);
       token.set(data.token);
       return data;
     } catch (error) {
@@ -19,7 +19,7 @@ export const register = createAsyncThunk(
   'auth/register',
   async (body, { rejectWithValue }) => {
     try {
-      const { data } = await privateApi.post('/users/signup', body);
+      const { data } = await instance.post('/users/signup', body);
       token.set(data.token);
       return data;
     } catch (error) {
@@ -39,7 +39,7 @@ export const refreshUser = createAsyncThunk(
         return rejectWithValue();
       }
       token.set(value);
-      const response = await privateApi.get('/users/current');
+      const response = await instance.get('/users/current');
       return response.data;
     } catch (error) {
       token.unSet();
@@ -52,7 +52,7 @@ export const logOut = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await privateApi.post('/users/logout');
+      const response = await instance.post('/users/logout');
       token.unSet();
       return response.data;
     } catch (error) {
