@@ -1,14 +1,25 @@
+import { useEffect } from 'react';
 import css from './Contacts.module.css';
 import Loader from 'components/Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContactThunk } from 'redux/operations';
-import { selectFilterSearch, selectIsLoading } from 'redux/selectors';
+import { selectAuth } from 'redux/auth/selector';
+import {
+  deleteContactThunk,
+  fetchContactsThunk,
+} from 'redux/contacts/operations';
+import { selectFilterSearch, selectIsLoading } from 'redux/contacts/selectors';
 
-const Contacts = () => {
+const ContactsList = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
-
   const visibleContacts = useSelector(selectFilterSearch);
+  const isAuth = useSelector(selectAuth);
+  useEffect(() => {
+    if (isAuth) {
+      console.log(1);
+      dispatch(fetchContactsThunk());
+    }
+  }, [dispatch, isAuth]);
 
   return (
     <>
@@ -35,4 +46,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default ContactsList;

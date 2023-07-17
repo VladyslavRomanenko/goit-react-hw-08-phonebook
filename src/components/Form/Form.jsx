@@ -1,8 +1,8 @@
 import css from './Form.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/selectors';
-import { addContactThunk } from 'redux/operations';
+import { selectContacts } from 'redux/contacts/selectors';
+import { addContactThunk } from 'redux/contacts/operations';
 
 const Form = () => {
   const [contact, setContact] = useState({ name: '', number: '' });
