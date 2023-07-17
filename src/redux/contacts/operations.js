@@ -1,7 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import { instance } from 'redux/auth/api';
-import { selectAuth } from 'redux/auth/selector';
 
 export const fetchContactsThunk = createAsyncThunk(
   'contacts/fetchAllContacts',
